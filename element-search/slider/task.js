@@ -1,23 +1,27 @@
-const sliderItem = document.querySelectorAll('.slider__item');
-const sliderDot = document.querySelectorAll('.slider__dot');
+const sliderItems = document.querySelectorAll('.slider__item');
+const sliderDots = document.querySelectorAll('.slider__dot');
 const sliderArrowPrew = document.querySelector('.slider__arrow_prev');
 const sliderArrowNext = document.querySelector('.slider__arrow_next');
 
 let activeSlideIndex = 0;
 
+window.addEventListener('load', function () {
+    sliderDots.item(activeSlideIndex).classList.add('slider__dot_active');
+});
+
 function toggleActiveSlide(activeSlideIndex) {
   let activeSlide = document.querySelector('.slider__item_active');
   let activeDot = document.querySelector('.slider__dot_active');
   activeSlide.classList.remove('slider__item_active');
-  sliderItem.item(activeSlideIndex).classList.add('slider__item_active');
-  sliderDot.item(activeSlideIndex).classList.add('slider__dot_active');
+  sliderItems.item(activeSlideIndex).classList.add('slider__item_active');
   activeDot.classList.remove('slider__dot_active');
+  sliderDots.item(activeSlideIndex).classList.add('slider__dot_active');
 }
 
 sliderArrowPrew.addEventListener('click', function () {
   activeSlideIndex--;
   if (activeSlideIndex < 0) {
-    activeSlideIndex = sliderItem.length - 1;
+    activeSlideIndex = sliderItems.length - 1;
   }
   toggleActiveSlide(activeSlideIndex);
   return activeSlideIndex;
@@ -25,13 +29,13 @@ sliderArrowPrew.addEventListener('click', function () {
 
 sliderArrowNext.addEventListener('click', function () {
   activeSlideIndex++;
-  if (activeSlideIndex === sliderItem.length) {
+  if (activeSlideIndex === sliderItems.length) {
     activeSlideIndex = 0;
   }
   toggleActiveSlide(activeSlideIndex);
   return activeSlideIndex;
 });
 
-for (let k = 0; k < sliderDot.length; k++) {
-  sliderDot.item(k).addEventListener('mouseover', () => toggleActiveSlide(k));
+for (const index in sliderDots) {
+    sliderDots.item(index).addEventListener('click', () => toggleActiveSlide(index));
 }
