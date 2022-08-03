@@ -1,50 +1,21 @@
 'use strict'
-let hasTooltip = document.querySelectorAll('.has-tooltip');
-let position = ['bottom', 'bottom', 'right', 'left', 'top', 'top'];
+const hasTooltip = document.querySelectorAll('.has-tooltip');
 
-[...hasTooltip].map((elem, index) => elem.setAttribute('data-position', position[index]));
+[...hasTooltip].map(function(elem) {
+    elem.style.position = 'relative';
+    elem.style.display = 'inline-block';
+});
 
 document.addEventListener('click', e => {
     e.preventDefault();
-    let rect = e.target.getBoundingClientRect();
-    let position = e.target.dataset.position;
-    !document.querySelector('.tooltip_active') && (document.body.innerHTML += `<div class="tooltip tooltip_active"></div>`);
-    let tooltip = document.querySelector('.tooltip_active');
-
-    if (e.target.title) {
-        if (tooltip.innerText == e.target.title) {
-            document.body.removeChild(tooltip);
-        } else {
-            tooltip.innerText = e.target.title;
-            tooltip.style.top = `${getPosition(rect, position, tooltip).posY}px`;
-            tooltip.style.left = `${getPosition(rect, position, tooltip).posX}px`;
-        }
+    if (document.querySelector('.tooltip_active')) {
+        document.querySelector('.tooltip_active').remove();
     }
+
+    if (e.target.classList.contains('has-tooltip')) {
+        e.target.innerHTML += `<div class="tooltip tooltip_active"></div>`;
+    }
+    const tooltip = document.querySelector('.tooltip_active');
+    tooltip.style.position = 'absolute';
+    tooltip.innerText = e.target.title;
 });
-
-function getPosition(rect, position, tooltip) {
-    let posX, posY;
-
-    if (position == 'top') {
-        posY = rect.top - tooltip.getBoundingClientRect().height;
-        posX = rect.left;
-    
-    } else if(position == 'right') {
-        posX = rect.right;
-        posY = rect.top;
-
-    } else if(position == 'left') {
-        posX = rect.left - tooltip.getBoundingClientRect().width;
-        posY = rect.top;
-
-    } else {
-        posY = rect.bottom;
-        posX = rect.left;
-    }
-    return {posX: posX, posY: posY}
-}
-
-document.addEventListener('scroll', () => {
-    document.querySelector('.tooltip_active');
-    tooltip;
-})
