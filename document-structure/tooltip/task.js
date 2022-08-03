@@ -45,5 +45,6 @@ function getPosition(rect, position, tooltip) {
 }
 
 document.addEventListener('scroll', () => {
+    document.querySelector('.tooltip_active');
     tooltip;
 })
