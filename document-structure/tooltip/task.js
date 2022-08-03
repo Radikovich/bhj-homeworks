@@ -6,17 +6,16 @@ let position = ['bottom', 'bottom', 'right', 'left', 'top', 'top'];
 
 document.addEventListener('click', e => {
     e.preventDefault();
-    let target = e.target;
-    let rect = target.getBoundingClientRect()
-    let position = target.dataset.position;
+    let rect = e.target.getBoundingClientRect();
+    let position = e.target.dataset.position;
     !document.querySelector('.tooltip_active') && (document.body.innerHTML += `<div class="tooltip tooltip_active"></div>`);
     let tooltip = document.querySelector('.tooltip_active');
 
-    if (target.title) {
-        if (tooltip.textContent == target.title) {
+    if (e.target.title) {
+        if (tooltip.innerText == e.target.title) {
             document.body.removeChild(tooltip);
         } else {
-            tooltip.textContent = target.title;
+            tooltip.innerText = e.target.title;
             tooltip.style.top = `${getPosition(rect, position, tooltip).posY}px`;
             tooltip.style.left = `${getPosition(rect, position, tooltip).posX}px`;
         }
@@ -46,6 +45,5 @@ function getPosition(rect, position, tooltip) {
 }
 
 document.addEventListener('scroll', () => {
-    let tooltip = document.querySelector('.tooltip_active');
-    tooltip && document.body.removeChild(tooltip);
+    tooltip;
 })
