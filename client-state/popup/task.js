@@ -1,6 +1,5 @@
 const subscribeModal = document.getElementById('subscribe-modal');
 const modalClose = document.querySelector('.modal__close');
-subscribeModal.classList.add('modal_active');
 
 const getCookie = name => {
     const value = '; ' + document.cookie;

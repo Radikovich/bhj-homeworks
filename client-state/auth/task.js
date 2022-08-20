@@ -63,7 +63,4 @@ if (localStorage.userId !== undefined) {
 } else {
     signin.classList.add('signin_active');
 }
-
-window.addEventListener("load", () =>
-    welcome.classList.remove('welcome_active')); 
   
